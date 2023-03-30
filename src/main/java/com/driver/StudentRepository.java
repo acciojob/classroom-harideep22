@@ -50,10 +50,20 @@ public class StudentRepository {
     }
     public void deleteTeacher(String teacher){
         teacherDb.remove(teacher);
+        List<String>students=teacherStudentPair.get(teacher);
+        for(String name:students){
+            studentDb.remove(name);
+        }
         teacherStudentPair.remove(teacher);
     }
     public void deleteAllTeachers(){
         teacherDb=new HashMap<>();
-        teacherStudentPair=new HashMap<>();
+        for(String teacher:teacherStudentPair.keySet()){
+            List<String>students=teacherStudentPair.get(teacher);
+            for(String name:students){
+                studentDb.remove(name);
+            }
+            teacherStudentPair.remove(teacher);
+        }
     }
 }
